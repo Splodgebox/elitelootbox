@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id('com.github.johnrengelman.shadow') version '8.1.1'
+}
+
+group = 'net.splodgebox.elitelootbox'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'SpigotMC'
+        url = uri('https://hub.spigotmc.org/nexus/content/repositories/snapshots/')
+    }
+    maven {
+        name = 'CodeMC'
+        url = uri('https://repo.codemc.io/repository/maven-public/')
+    }
+    maven {
+        url = uri("https://libraries.minecraft.net/")
+    }
+    flatDir {
+        dirs '../eliteapi/build/libs'
+    }
+}
+
+dependencies {
+    annotationProcessor('org.projectlombok:lombok:1.18.36')
+    compileOnly('org.projectlombok:lombok:1.18.36')
+    compileOnly('org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT')
+
+    implementation 'org.slf4j:slf4j-api:2.0.7'
+    implementation(name: "eliteapi")
+}
+
+shadowJar {
+    relocate('net.splodgebox.eliteapi', 'net.splodgebox.elitelootbox.eliteapi')
+}

@@ -1,0 +1,4 @@
+name: EliteLootbox
+version: 2.0.0
+main: net.splodgebox.elitelootbox.EliteLootbox
+api-version: 1.13
