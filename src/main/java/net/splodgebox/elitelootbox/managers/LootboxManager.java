@@ -14,6 +14,7 @@
 package net.splodgebox.elitelootbox.managers;
 
 import lombok.extern.slf4j.Slf4j;
+import net.splodgebox.eliteapi.util.FileManager;
 import net.splodgebox.eliteapi.xseries.XMaterial;
 import net.splodgebox.elitelootbox.EliteLootbox;
 import net.splodgebox.elitelootbox.exceptions.LootboxConfigurationException;
@@ -38,7 +39,7 @@ public class LootboxManager {
 
     private final EliteLootbox plugin;
     private final HashMap<String, Lootbox> lootboxes;
-    private final HashMap<String, YamlConfiguration> lootboxFiles;
+    private final HashMap<String, FileManager> lootboxFiles;
 
     public LootboxManager(EliteLootbox plugin) throws LootboxConfigurationException {
         this.plugin = plugin;
@@ -48,10 +49,14 @@ public class LootboxManager {
         loadFiles();
     }
 
+    public Lootbox getLootbox(String key) {
+        return lootboxes.get(key);
+    }
+
     public void loadLootboxes() {
         lootboxFiles.forEach((key, config) -> {
             try {
-                Lootbox lootbox = parseLootbox(key, config);
+                Lootbox lootbox = parseLootbox(key, config.getConfig());
                 if (lootbox != null) {
                     lootboxes.put(key, lootbox);
                 } else {
@@ -61,6 +66,26 @@ public class LootboxManager {
                 log.error("Error loading lootbox: {} - {}", key, e.getMessage(), e);
             }
         });
+    }
+
+    public void saveLootbox(Lootbox lootbox) {
+        FileManager fileManager = lootboxFiles.get(lootbox.getId());
+        YamlConfiguration config = fileManager.getConfig();
+        saveRewards(config, lootbox.getRewards());
+        fileManager.save();
+    }
+
+    private void saveRewards(YamlConfiguration config, List<LootboxReward> rewards) {
+        if (rewards == null || rewards.isEmpty()) {
+            return;
+        }
+
+        for (int index = 0; index < rewards.size(); index++) {
+            LootboxReward reward = rewards.get(index);
+            String path = "rewards." + index + ".";
+            config.set(path + "item", reward.getItemStack());
+            config.set(path + "chance", reward.getChance());
+        }
     }
 
     private Lootbox parseLootbox(String key, YamlConfiguration config) {
@@ -108,7 +133,7 @@ public class LootboxManager {
         );
     }
 
-    public List<LootboxReward> getLootboxRewards(String key, YamlConfiguration config) {
+    private List<LootboxReward> getLootboxRewards(String key, YamlConfiguration config) {
         ConfigurationSection section = config.getConfigurationSection("rewards");
 
         if (section == null) {
@@ -127,7 +152,7 @@ public class LootboxManager {
         return rewards;
     }
 
-    public LootboxReward parseReward(YamlConfiguration config, String rewardKey) {
+    private LootboxReward parseReward(YamlConfiguration config, String rewardKey) {
         String path = "rewards." + rewardKey + ".";
         ItemStack itemStack = config.getItemStack(path + "item");
         double chance = config.getDouble(path + "chance", 1.0);
@@ -155,7 +180,7 @@ public class LootboxManager {
         String fileName = file.getFileName().toString();
         String baseName = fileName.contains(".") ? fileName.substring(0, fileName.lastIndexOf('.')) : fileName;
 
-        lootboxFiles.put(baseName, YamlConfiguration.loadConfiguration(file.toFile()));
+        lootboxFiles.put(baseName, new FileManager(plugin, fileName, plugin.getDataFolder() + "/lootbox/"));
         log.info("Loaded lootbox file: {}", fileName);
     }
 

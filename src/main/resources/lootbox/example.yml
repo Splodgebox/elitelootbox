@@ -1,0 +1,10 @@
+item:
+  material: "CHEST"
+  name: "&6&lExample Lootbox &7(Right-Click)"
+  lore:
+    - '&7Right-Click to open the lootbox'
+
+animation:
+  type: "LOOTBOX"
+
+rewards: {}
