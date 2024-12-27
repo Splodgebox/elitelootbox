@@ -23,9 +23,9 @@ public class LootboxRewardManager {
 
     private final LootboxManager lootboxManager;
 
-    public void addReward(String lootboxName, ItemStack reward, double chance) {
+    public void addReward(String lootboxName, ItemStack reward, double chance, String command, boolean giveItem) {
         Lootbox lootbox = lootboxManager.getLootbox(lootboxName);
-        lootbox.getRewards().add(new LootboxReward(reward, chance));
+        lootbox.getRewards().add(new LootboxReward(reward, chance, command, giveItem));
         lootboxManager.saveLootbox(lootbox);
     }
 

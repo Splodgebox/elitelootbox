@@ -19,9 +19,11 @@ import net.splodgebox.eliteapi.acf.PaperCommandManager;
 import net.splodgebox.eliteapi.message.Message;
 import net.splodgebox.eliteapi.message.MessageManager;
 import net.splodgebox.elitelootbox.commands.DefaultCommand;
+import net.splodgebox.elitelootbox.commands.LootboxAddRewardCommand;
 import net.splodgebox.elitelootbox.commands.LootboxGiveCommand;
 import net.splodgebox.elitelootbox.exceptions.LootboxConfigurationException;
 import net.splodgebox.elitelootbox.managers.LootboxManager;
+import net.splodgebox.elitelootbox.managers.LootboxRewardManager;
 import net.splodgebox.elitelootbox.models.Lootbox;
 import net.splodgebox.elitelootbox.models.LootboxReward;
 import net.splodgebox.elitelootbox.utils.Messages;
@@ -33,8 +35,8 @@ public class EliteLootbox extends JavaPlugin {
     @Getter
     private static EliteLootbox instance;
 
-    @Getter
     private LootboxManager lootboxManager;
+    private LootboxRewardManager lootboxRewardManager;
 
     @Override
     public void onEnable() {
@@ -62,6 +64,8 @@ public class EliteLootbox extends JavaPlugin {
         } catch (LootboxConfigurationException e) {
             log.error("Error loading lootbox configurations: ", e);
         }
+
+        lootboxRewardManager = new LootboxRewardManager(lootboxManager);
     }
 
     private void initializeCommands() {
@@ -70,8 +74,10 @@ public class EliteLootbox extends JavaPlugin {
 
         commandManager.registerCommand(new DefaultCommand());
         commandManager.registerCommand(new LootboxGiveCommand());
+        commandManager.registerCommand(new LootboxAddRewardCommand());
 
         commandManager.registerDependency(LootboxManager.class, lootboxManager);
+        commandManager.registerDependency(LootboxRewardManager.class, lootboxRewardManager);
         commandManager.getCommandCompletions().registerStaticCompletion("lootboxes", lootboxManager.getLootboxes());
     }
 

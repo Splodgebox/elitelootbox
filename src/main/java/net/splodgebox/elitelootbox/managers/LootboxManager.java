@@ -160,8 +160,10 @@ public class LootboxManager {
     private LootboxReward parseReward(YamlConfiguration config, String rewardKey) {
         String path = "rewards." + rewardKey + ".";
         ItemStack itemStack = config.getItemStack(path + "item");
-        double chance = config.getDouble(path + "chance", 1.0);
-        return itemStack != null && chance > 0.0 ? new LootboxReward(itemStack, chance) : null;
+        double chance = config.getDouble(path + "chance", 100.0);
+        String command = config.getString(path + "command", null);
+        boolean giveItem = config.getBoolean(path + "give-item", true);
+        return itemStack != null ? new LootboxReward(itemStack, chance, command, giveItem) : null;
     }
 
     public void loadFiles() throws LootboxConfigurationException {
