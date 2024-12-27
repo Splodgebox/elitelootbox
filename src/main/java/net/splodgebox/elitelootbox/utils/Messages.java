@@ -17,13 +17,11 @@ import net.splodgebox.eliteapi.message.Message;
 
 public class Messages {
 
-    @Message(path = "commands.no_permission", defaultMessage = "&4&l(!) &4You do not have permission to do this")
-    public String noPermission;
+    @Message(path = "general.player_not_found", defaultMessage = "&3&lElite&b&lLootbox&f: &7Unable to find this player!")
+    public static String playerNotFound;
 
-    @Message(path = "general.welcome", defaultMessage = "&aWelcome to the server!")
-    public static String WELCOME;
+    @Message(path = "general.lootbox_not_found", defaultMessage = "&3&lElite&b&lLootbox&f: &7This lootbox does not exist!")
+    public static String lootboxNotFound;
 
-    @Message(path = "general.goodbye", defaultMessage = "&cGoodbye! See you next time.")
-    public String GOODBYE;
 
 }

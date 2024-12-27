@@ -32,6 +32,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 @Slf4j
@@ -51,6 +52,10 @@ public class LootboxManager {
 
     public Lootbox getLootbox(String key) {
         return lootboxes.get(key);
+    }
+
+    public Set<String> getLootboxes() {
+        return lootboxes.keySet();
     }
 
     public void loadLootboxes() {

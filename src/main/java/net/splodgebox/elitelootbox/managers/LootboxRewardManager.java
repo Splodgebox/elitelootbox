@@ -13,17 +13,15 @@
 
 package net.splodgebox.elitelootbox.managers;
 
+import lombok.RequiredArgsConstructor;
 import net.splodgebox.elitelootbox.models.Lootbox;
 import net.splodgebox.elitelootbox.models.LootboxReward;
 import org.bukkit.inventory.ItemStack;
 
+@RequiredArgsConstructor
 public class LootboxRewardManager {
 
     private final LootboxManager lootboxManager;
-
-    public LootboxRewardManager(LootboxManager lootboxManager) {
-        this.lootboxManager = lootboxManager;
-    }
 
     public void addReward(String lootboxName, ItemStack reward, double chance) {
         Lootbox lootbox = lootboxManager.getLootbox(lootboxName);

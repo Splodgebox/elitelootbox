@@ -15,8 +15,16 @@ package net.splodgebox.elitelootbox;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import net.splodgebox.eliteapi.acf.PaperCommandManager;
+import net.splodgebox.eliteapi.message.Message;
+import net.splodgebox.eliteapi.message.MessageManager;
+import net.splodgebox.elitelootbox.commands.DefaultCommand;
+import net.splodgebox.elitelootbox.commands.LootboxGiveCommand;
 import net.splodgebox.elitelootbox.exceptions.LootboxConfigurationException;
 import net.splodgebox.elitelootbox.managers.LootboxManager;
+import net.splodgebox.elitelootbox.models.Lootbox;
+import net.splodgebox.elitelootbox.models.LootboxReward;
+import net.splodgebox.elitelootbox.utils.Messages;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @Slf4j
@@ -32,14 +40,10 @@ public class EliteLootbox extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        try {
-            lootboxManager = new LootboxManager(this);
-            lootboxManager.loadLootboxes();
-        } catch (LootboxConfigurationException e) {
-            log.error("Error loading lootbox configurations: ", e);
-            log.error("Disabling plugin.");
-            getServer().getPluginManager().disablePlugin(this);
-        }
+        initializeManagers();
+        initializeCommands();
+
+        registerMessages();
     }
 
     @Override
@@ -49,5 +53,40 @@ public class EliteLootbox extends JavaPlugin {
         if (lootboxManager != null) {
             lootboxManager.cleanup();
         }
+    }
+
+    private void initializeManagers() {
+        try {
+            lootboxManager = new LootboxManager(this);
+            lootboxManager.loadLootboxes();
+        } catch (LootboxConfigurationException e) {
+            log.error("Error loading lootbox configurations: ", e);
+        }
+    }
+
+    private void initializeCommands() {
+        PaperCommandManager commandManager = new PaperCommandManager(this);
+        commandManager.enableUnstableAPI("brigadier");
+
+        commandManager.registerCommand(new DefaultCommand());
+        commandManager.registerCommand(new LootboxGiveCommand());
+
+        commandManager.registerDependency(LootboxManager.class, lootboxManager);
+        commandManager.getCommandCompletions().registerStaticCompletion("lootboxes", lootboxManager.getLootboxes());
+    }
+
+    private void registerMessages() {
+        MessageManager messageManager = new MessageManager(this);
+        messageManager.loadMessages(
+                // commands
+                DefaultCommand.class,
+                LootboxGiveCommand.class,
+
+                // models
+                LootboxReward.class,
+
+                // utils
+                Messages.class
+        );
     }
 }

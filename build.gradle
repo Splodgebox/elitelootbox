@@ -6,6 +6,11 @@ plugins {
 group = 'net.splodgebox.elitelootbox'
 version = '1.0-SNAPSHOT'
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
 repositories {
     mavenCentral()
     maven {
@@ -22,6 +27,9 @@ repositories {
     flatDir {
         dirs '../eliteapi/build/libs'
     }
+    maven {
+        url = uri('https://jitpack.io')
+    }
 }
 
 dependencies {
@@ -30,7 +38,7 @@ dependencies {
     compileOnly('org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT')
 
     implementation 'org.slf4j:slf4j-api:2.0.7'
-    implementation(name: "eliteapi")
+    implementation 'com.github.Splodgebox:eliteapi:1.1.0'
 }
 
 shadowJar {
