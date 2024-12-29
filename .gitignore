@@ -1,5 +1,10 @@
-# User-specific stuff
+# Ignore the entire .idea folder
 .idea/
+
+# Except for codeStyles folder
+!.idea/codeStyles/
+!.idea/codeStyles/codeStyleConfig.xml
+!.idea/codeStyles/*.xml
 
 *.iml
 *.ipr

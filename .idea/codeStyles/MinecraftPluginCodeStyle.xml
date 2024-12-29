@@ -1,0 +1,38 @@
+<code_scheme name="MinecraftPluginCodeStyle" version="173">
+    <option name="RIGHT_MARGIN" value="120" />
+    <codeStyleSettings language="JAVA">
+        <option name="ALIGN_MULTILINE_CHAINED_METHODS" value="true" />
+        <option name="ALIGN_MULTILINE_PARAMETERS" value="true" />
+        <option name="BRACE_STYLE" value="1" />
+        <option name="CLASS_BRACE_STYLE" value="1" />
+        <option name="METHOD_BRACE_STYLE" value="1" />
+        <option name="KEEP_SIMPLE_BLOCKS_IN_ONE_LINE" value="true" />
+        <option name="KEEP_SIMPLE_METHODS_IN_ONE_LINE" value="true" />
+        <option name="SPACE_AFTER_COMMA" value="true" />
+        <option name="SPACE_BEFORE_METHOD_CALL_PARENTHESES" value="false" />
+        <option name="SPACE_BEFORE_METHOD_PARENTHESES" value="false" />
+        <option name="DO_NOT_INDENT_TOP_LEVEL_CLASS_MEMBERS" value="false" />
+        <option name="INDENT_SIZE" value="4" />
+        <option name="CONTINUATION_INDENT_SIZE" value="8" />
+        <option name="TAB_SIZE" value="4" />
+        <option name="USE_TAB_CHARACTER" value="false" />
+        <option name="ALIGN_GROUP_FIELD_DECLARATIONS" value="true" />
+        <option name="KEEP_BLANK_LINES_IN_DECLARATIONS" value="1" />
+        <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
+        <option name="METHOD_ANNOTATION_WRAP" value="1" />
+        <option name="FIELD_ANNOTATION_WRAP" value="1" />
+
+        <!-- Added: Method call argument wrapping -->
+        <option name="CALL_PARAMETERS_WRAP" value="2" /> <!-- Wrap if long -->
+        <option name="ALIGN_MULTILINE_PARAMETERS" value="true" />
+        <option name="CALL_PARAMETERS_LPAREN_ON_NEXT_LINE" value="false" />
+        <option name="CALL_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true" />
+
+        <!-- Added: Chained method calls -->
+        <option name="METHOD_CALL_CHAIN_WRAP" value="2" /> <!-- Wrap if long -->
+        <option name="ALIGN_MULTILINE_CHAINED_METHODS" value="true" />
+
+        <!-- Added: Preserve first argument formatting -->
+        <option name="DO_NOT_WRAP_FIRST_ARGUMENT_IF_POSSIBLE" value="true" />
+    </codeStyleSettings>
+</code_scheme>

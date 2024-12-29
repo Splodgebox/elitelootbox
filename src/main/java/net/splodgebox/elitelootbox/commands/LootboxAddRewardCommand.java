@@ -24,12 +24,10 @@ public class LootboxAddRewardCommand extends DefaultCommand {
     @CommandPermission("elitelootbox.addreward")
     @CommandCompletion("@lootboxes")
     public void addReward(CommandSender sender, String lootbox, double chance, @Optional Boolean giveItem, @Optional String command) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             Chat.send(sender, Messages.cannotSendFromConsole);
             return;
         }
-
-        Player player = (Player) sender;
 
         Lootbox box = validateLootbox(sender, lootbox);
         if (box == null) {
@@ -42,7 +40,7 @@ public class LootboxAddRewardCommand extends DefaultCommand {
         }
 
         rewardManager.addReward(lootbox, item, chance, command, Boolean.TRUE.equals(giveItem));
-        Chat.send(sender, Messages.rewardAdded,"{LOOTBOX}", lootbox, "{CHANCE}", String.valueOf(chance));
+        Chat.send(sender, Messages.rewardAdded, "{LOOTBOX}", lootbox, "{CHANCE}", String.valueOf(chance));
     }
 
     private Lootbox validateLootbox(CommandSender sender, String lootboxName) {

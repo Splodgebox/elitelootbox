@@ -29,7 +29,6 @@ public class DefaultCommand extends BaseCommand {
      * bedrock players names as the validation checks don't allow '.' at the start of the name
      *
      * @param playerName name of the player
-     *
      * @return Player object of requested player
      */
     public Player getPlayer(String playerName) {

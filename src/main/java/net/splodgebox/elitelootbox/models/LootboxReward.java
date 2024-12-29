@@ -21,7 +21,8 @@ import net.splodgebox.eliteapi.message.Message;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
-@Getter @Setter
+@Getter
+@Setter
 @AllArgsConstructor
 public class LootboxReward {
 
@@ -30,7 +31,8 @@ public class LootboxReward {
 
     private ItemStack itemStack;
     private double chance;
-    @Nullable private String command;
+    @Nullable
+    private String command;
     private boolean giveItem;
 
     public ItemStack createDisplayItem() {
