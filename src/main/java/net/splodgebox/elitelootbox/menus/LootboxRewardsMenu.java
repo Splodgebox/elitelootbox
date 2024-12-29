@@ -1,7 +1,9 @@
 package net.splodgebox.elitelootbox.menus;
 
+import net.splodgebox.eliteapi.chat.Chat;
 import net.splodgebox.eliteapi.gui.menu.Button;
 import net.splodgebox.eliteapi.gui.menu.types.PagedMenu;
+import net.splodgebox.eliteapi.message.Message;
 import net.splodgebox.eliteapi.xseries.XSound;
 import net.splodgebox.elitelootbox.managers.LootboxRewardManager;
 import net.splodgebox.elitelootbox.models.Lootbox;
@@ -11,6 +13,9 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class LootboxRewardsMenu extends PagedMenu {
+
+    @Message(path = "menus.list_lootbox_rewards.reward_removed", defaultMessage = "&3&lElite&b&lLootbox&f: &7You have successfully removed a reward from {LOOTBOX}!")
+    public String rewardRemovedMessage;
 
     private final Lootbox lootbox;
     private final LootboxRewardManager rewardManager;
@@ -31,16 +36,17 @@ public class LootboxRewardsMenu extends PagedMenu {
     }
 
     private void addRewardButton(LootboxReward reward, int index) {
-        appendButton(new Button(reward.createDisplayItem(), (player, event) -> handleRewardClick(event, index)));
+        appendButton(new Button(reward.createDisplayItem(), (player, event) -> handleRewardClick(player, event, index)));
     }
 
-    private void handleRewardClick(InventoryClickEvent event, int index) {
+    private void handleRewardClick(Player player, InventoryClickEvent event, int index) {
         event.setCancelled(true);
 
         // TODO: Add ability to change command, chance etc.
         if (event.getClick() == ClickType.SHIFT_LEFT) {
             rewardManager.removeReward(lootbox.getId(), index);
-            event.getWhoClicked().closeInventory();
+            Chat.send(player, rewardRemovedMessage, "{LOOTBOX}", lootbox.getName());
+            player.closeInventory();
         }
     }
 
