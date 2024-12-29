@@ -29,6 +29,15 @@ public class LootboxReward {
     @Message(path = "lootbox_reward.display_chance", defaultMessage = "&6Chance: &e{CHANCE}&6%")
     public static String chanceMessage;
 
+    @Message(path = "lootbox_reward.display_command", defaultMessage = "&6Command: &e{COMMAND}")
+    public static String commandMessage;
+
+    @Message(path = "lootbox_reward.display_command_none", defaultMessage = "&enone")
+    public static String noCommandMessage;
+
+    @Message(path = "lootbox_reward.display_give_item", defaultMessage = "&6Give-Item?: &e{GIVE-ITEM}")
+    public static String giveItemMessage;
+
     private ItemStack itemStack;
     private double chance;
     @Nullable
@@ -38,6 +47,8 @@ public class LootboxReward {
     public ItemStack createDisplayItem() {
         return new ItemBuilder(itemStack)
                 .addLore(chanceMessage, "{CHANCE}", String.valueOf(chance))
+                .addLore(commandMessage, "{COMMAND}", command == null ? noCommandMessage : command)
+                .addLore(giveItemMessage, "{GIVE-ITEM}", String.valueOf(giveItem))
                 .build();
     }
 
