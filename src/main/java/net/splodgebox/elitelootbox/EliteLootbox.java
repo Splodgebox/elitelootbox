@@ -15,16 +15,16 @@ package net.splodgebox.elitelootbox;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import net.splodgebox.eliteapi.PluginAPI;
 import net.splodgebox.eliteapi.acf.PaperCommandManager;
-import net.splodgebox.eliteapi.message.Message;
 import net.splodgebox.eliteapi.message.MessageManager;
 import net.splodgebox.elitelootbox.commands.DefaultCommand;
 import net.splodgebox.elitelootbox.commands.LootboxAddRewardCommand;
 import net.splodgebox.elitelootbox.commands.LootboxGiveCommand;
+import net.splodgebox.elitelootbox.commands.LootboxListCommand;
 import net.splodgebox.elitelootbox.exceptions.LootboxConfigurationException;
 import net.splodgebox.elitelootbox.managers.LootboxManager;
 import net.splodgebox.elitelootbox.managers.LootboxRewardManager;
-import net.splodgebox.elitelootbox.models.Lootbox;
 import net.splodgebox.elitelootbox.models.LootboxReward;
 import net.splodgebox.elitelootbox.utils.Messages;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -58,6 +58,8 @@ public class EliteLootbox extends JavaPlugin {
     }
 
     private void initializeManagers() {
+        PluginAPI.implementMenuListeners(this);
+
         try {
             lootboxManager = new LootboxManager(this);
             lootboxManager.loadLootboxes();
@@ -75,10 +77,12 @@ public class EliteLootbox extends JavaPlugin {
         commandManager.registerCommand(new DefaultCommand());
         commandManager.registerCommand(new LootboxGiveCommand());
         commandManager.registerCommand(new LootboxAddRewardCommand());
+        commandManager.registerCommand(new LootboxListCommand());
 
         commandManager.registerDependency(LootboxManager.class, lootboxManager);
         commandManager.registerDependency(LootboxRewardManager.class, lootboxRewardManager);
-        commandManager.getCommandCompletions().registerStaticCompletion("lootboxes", lootboxManager.getLootboxes());
+
+        commandManager.getCommandCompletions().registerStaticCompletion("lootboxes", lootboxManager.getLootboxIds());
     }
 
     private void registerMessages() {
@@ -87,6 +91,7 @@ public class EliteLootbox extends JavaPlugin {
                 // commands
                 DefaultCommand.class,
                 LootboxGiveCommand.class,
+                LootboxListCommand.class,
 
                 // models
                 LootboxReward.class,

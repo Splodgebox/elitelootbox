@@ -13,6 +13,7 @@
 
 package net.splodgebox.elitelootbox.managers;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.splodgebox.eliteapi.util.FileManager;
 import net.splodgebox.eliteapi.xseries.XMaterial;
@@ -39,8 +40,10 @@ import java.util.stream.Stream;
 public class LootboxManager {
 
     private final EliteLootbox plugin;
-    private final HashMap<String, Lootbox> lootboxes;
     private final HashMap<String, FileManager> lootboxFiles;
+
+    @Getter
+    private final HashMap<String, Lootbox> lootboxes;
 
     public LootboxManager(EliteLootbox plugin) throws LootboxConfigurationException {
         this.plugin = plugin;
@@ -54,7 +57,7 @@ public class LootboxManager {
         return lootboxes.get(key);
     }
 
-    public Set<String> getLootboxes() {
+    public Set<String> getLootboxIds() {
         return lootboxes.keySet();
     }
 
