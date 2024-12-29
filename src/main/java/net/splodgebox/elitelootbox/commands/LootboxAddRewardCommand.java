@@ -3,6 +3,7 @@ package net.splodgebox.elitelootbox.commands;
 import net.splodgebox.eliteapi.acf.annotation.*;
 import net.splodgebox.eliteapi.chat.Chat;
 import net.splodgebox.eliteapi.item.ItemUtils;
+import net.splodgebox.eliteapi.message.Message;
 import net.splodgebox.elitelootbox.managers.LootboxManager;
 import net.splodgebox.elitelootbox.managers.LootboxRewardManager;
 import net.splodgebox.elitelootbox.models.Lootbox;
@@ -13,6 +14,9 @@ import org.bukkit.inventory.ItemStack;
 
 @CommandAlias("elitelootbox|lootbox|el")
 public class LootboxAddRewardCommand extends DefaultCommand {
+
+    @Message(path = "commands.addreward.reward_added", defaultMessage = "&3&lElite&b&lLootbox&f: &aReward successfully added to lootbox &b{LOOTBOX}&a with a chance of &b{CHANCE}&a!")
+    private String rewardAdded;
 
     @Dependency
     private LootboxManager lootboxManager;
@@ -40,7 +44,7 @@ public class LootboxAddRewardCommand extends DefaultCommand {
         }
 
         rewardManager.addReward(lootbox, item, chance, command, Boolean.TRUE.equals(giveItem));
-        Chat.send(sender, Messages.rewardAdded, "{LOOTBOX}", lootbox, "{CHANCE}", String.valueOf(chance));
+        Chat.send(sender, rewardAdded, "{LOOTBOX}", lootbox, "{CHANCE}", String.valueOf(chance));
     }
 
     private Lootbox validateLootbox(CommandSender sender, String lootboxName) {

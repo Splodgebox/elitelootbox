@@ -26,9 +26,6 @@ public class Messages {
     @Message(path = "general.cannot_send_from_console", defaultMessage = "&3&lElite&b&lLootbox&f: &7You cannot send this command from the console!")
     public static String cannotSendFromConsole;
 
-    @Message(path = "general.reward_added", defaultMessage = "&3&lElite&b&lLootbox&f: &aReward successfully added to lootbox &b{LOOTBOX}&a with a chance of &b{CHANCE}&a!")
-    public static String rewardAdded;
-
     @Message(path = "general.lootbox_not_found", defaultMessage = "&3&lElite&b&lLootbox&f: &7Lootbox &b{LOOTBOX}&7 does not exist!")
     public static String lootboxNotFound;
 
