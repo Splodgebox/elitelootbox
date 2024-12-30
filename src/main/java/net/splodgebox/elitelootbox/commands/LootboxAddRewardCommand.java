@@ -43,7 +43,7 @@ public class LootboxAddRewardCommand extends DefaultCommand {
             return;
         }
 
-        rewardManager.addReward(lootbox, item, chance, command, Boolean.TRUE.equals(giveItem));
+        rewardManager.addReward(lootbox, item, chance, command, Boolean.TRUE.equals(giveItem), false);
         Chat.send(sender, rewardAdded, "{LOOTBOX}", lootbox, "{CHANCE}", String.valueOf(chance));
     }
 

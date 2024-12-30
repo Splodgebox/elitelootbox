@@ -1,9 +1,6 @@
 package net.splodgebox.elitelootbox.commands;
 
-import net.splodgebox.eliteapi.acf.annotation.CommandAlias;
-import net.splodgebox.eliteapi.acf.annotation.CommandPermission;
-import net.splodgebox.eliteapi.acf.annotation.Dependency;
-import net.splodgebox.eliteapi.acf.annotation.Subcommand;
+import net.splodgebox.eliteapi.acf.annotation.*;
 import net.splodgebox.eliteapi.chat.Chat;
 import net.splodgebox.eliteapi.message.Message;
 import net.splodgebox.elitelootbox.managers.LootboxManager;
@@ -28,7 +25,7 @@ public class LootboxListRewardsCommand extends DefaultCommand {
 
     @Subcommand("rewards")
     @CommandPermission("elitelootbox.rewards")
-    public void openRewardsMenu(CommandSender sender, String lootboxName) {
+    public void openRewardsMenu(CommandSender sender, String lootboxName, @Optional boolean bonusRewards) {
         if (!(sender instanceof Player player)) return;
 
         Lootbox lootbox = lootboxManager.getLootbox(lootboxName);
@@ -37,7 +34,7 @@ public class LootboxListRewardsCommand extends DefaultCommand {
             return;
         }
 
-        LootboxRewardsMenu lootboxRewardsMenu = new LootboxRewardsMenu(lootbox, rewardManager, menuTitle);
+        LootboxRewardsMenu lootboxRewardsMenu = new LootboxRewardsMenu(lootbox, rewardManager, menuTitle, bonusRewards);
         lootboxRewardsMenu.open(player);
     }
 

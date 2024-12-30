@@ -34,7 +34,9 @@ public class Lootbox {
     private final int modelData;
 
     private final AnimationType animationType;
+
     private final List<LootboxReward> rewards;
+    private final List<LootboxReward> bonusRewards;
 
     public ItemStack create() {
         return new ItemBuilder(material)

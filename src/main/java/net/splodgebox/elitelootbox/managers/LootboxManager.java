@@ -79,21 +79,24 @@ public class LootboxManager {
     public void saveLootbox(Lootbox lootbox) {
         FileManager fileManager = lootboxFiles.get(lootbox.getId());
         YamlConfiguration config = fileManager.getConfig();
-        saveRewards(config, lootbox.getRewards());
+
+        saveRewards(config, lootbox.getRewards(), "rewards");
+        saveRewards(config, lootbox.getBonusRewards(), "bonus_rewards");
+
         fileManager.save();
     }
 
-    private void saveRewards(YamlConfiguration config, List<LootboxReward> rewards) {
-        if (rewards == null || rewards.isEmpty()) {
-            return;
-        }
-
+    private void saveRewards(YamlConfiguration config, List<LootboxReward> rewards, String pathPrefix) {
         for (int index = 0; index < rewards.size(); index++) {
-            LootboxReward reward = rewards.get(index);
-            String path = "rewards." + index + ".";
-            config.set(path + "item", reward.getItemStack());
-            config.set(path + "chance", reward.getChance());
+            saveSingleReward(config, rewards.get(index), pathPrefix + "." + index + ".");
         }
+    }
+
+    private void saveSingleReward(YamlConfiguration config, LootboxReward reward, String path) {
+        config.set(path + "item", reward.getItemStack());
+        config.set(path + "chance", reward.getChance());
+        config.set(path + "command", reward.getCommand() != null ? reward.getCommand() : "none");
+        config.set(path + "give_item", reward.isGiveItem());
     }
 
     private Lootbox parseLootbox(String key, YamlConfiguration config) {
@@ -137,12 +140,13 @@ public class LootboxManager {
                 material,
                 modelData,
                 parsedAnimationType,
-                getLootboxRewards(key, config)
+                getLootboxRewards("rewards", key, config),
+                getLootboxRewards("bonus_rewards", key, config)
         );
     }
 
-    private List<LootboxReward> getLootboxRewards(String key, YamlConfiguration config) {
-        ConfigurationSection section = config.getConfigurationSection("rewards");
+    private List<LootboxReward> getLootboxRewards(String configSection, String key, YamlConfiguration config) {
+        ConfigurationSection section = config.getConfigurationSection(configSection);
 
         if (section == null) {
             log.warn("Rewards section is missing/invalid for lootbox: {}", key);
@@ -151,7 +155,7 @@ public class LootboxManager {
 
         List<LootboxReward> rewards = new ArrayList<>();
         section.getKeys(false).forEach(rewardKey -> {
-            LootboxReward reward = parseReward(config, rewardKey);
+            LootboxReward reward = parseReward(configSection, config, rewardKey);
             if (reward != null) {
                 rewards.add(reward);
             }
@@ -160,12 +164,12 @@ public class LootboxManager {
         return rewards;
     }
 
-    private LootboxReward parseReward(YamlConfiguration config, String rewardKey) {
-        String path = "rewards." + rewardKey + ".";
+    private LootboxReward parseReward(String key, YamlConfiguration config, String rewardKey) {
+        String path = key + "." + rewardKey + ".";
         ItemStack itemStack = config.getItemStack(path + "item");
         double chance = config.getDouble(path + "chance", 100.0);
-        String command = config.getString(path + "command", null);
-        boolean giveItem = config.getBoolean(path + "give-item", true);
+        String command = config.getString(path + "command", "none");
+        boolean giveItem = config.getBoolean(path + "give_item", true);
         return itemStack != null ? new LootboxReward(itemStack, chance, command, giveItem) : null;
     }
 

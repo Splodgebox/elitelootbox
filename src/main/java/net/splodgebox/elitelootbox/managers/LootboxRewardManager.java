@@ -20,6 +20,8 @@ import net.splodgebox.elitelootbox.models.LootboxReward;
 import net.splodgebox.elitelootbox.utils.RandomCollection;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 public class LootboxRewardManager {
@@ -32,28 +34,51 @@ public class LootboxRewardManager {
         return rewards;
     }
 
-    public void addReward(String lootboxName, ItemStack reward, double chance, String command, boolean giveItem) {
+    public void addReward(String lootboxName, ItemStack reward, double chance, String command, boolean giveItem, boolean isBonus) {
         Lootbox lootbox = validateLootbox(lootboxName);
         if (lootbox == null) {
             return;
         }
 
         LootboxReward lootboxReward = new LootboxReward(reward, chance, command, giveItem);
-        lootbox.getRewards().add(lootboxReward);
+        if (isBonus) {
+            lootbox.getBonusRewards().add(lootboxReward);
+        } else {
+            lootbox.getRewards().add(lootboxReward);
+        }
+
         lootboxManager.saveLootbox(lootbox);
     }
 
-    public void removeReward(String lootboxName, int index) {
+    public void editReward(String lootboxName, int index, LootboxReward reward, boolean isBonus) {
         Lootbox lootbox = validateLootbox(lootboxName);
         if (lootbox == null) {
             return;
         }
 
-        if (index < 0 || index >= lootbox.getRewards().size()) {
+        List<LootboxReward> rewardList = isBonus ? lootbox.getBonusRewards() : lootbox.getRewards();
+
+        if (index < 0 || index >= rewardList.size()) {
             throw new IndexOutOfBoundsException("Invalid reward index: " + index);
         }
 
-        lootbox.getRewards().remove(index);
+        rewardList.set(index, reward);
+        lootboxManager.saveLootbox(lootbox);
+    }
+
+    public void removeReward(String lootboxName, int index, boolean isBonus) {
+        Lootbox lootbox = validateLootbox(lootboxName);
+        if (lootbox == null) {
+            return;
+        }
+
+        List<LootboxReward> rewardList = isBonus ? lootbox.getBonusRewards() : lootbox.getRewards();
+
+        if (index < 0 || index >= rewardList.size()) {
+            throw new IndexOutOfBoundsException("Invalid reward index: " + index);
+        }
+
+        rewardList.remove(index);
         lootboxManager.saveLootbox(lootbox);
     }
 

@@ -8,3 +8,4 @@ animation:
   type: "LOOTBOX"
 
 rewards: {}
+bonus_rewards: { }

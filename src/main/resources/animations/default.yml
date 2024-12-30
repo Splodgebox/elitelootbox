@@ -1,0 +1,10 @@
+rows: 1
+schema:
+  - "x x £ £ £ $ $ x x"
+items:
+  £: "SHUFFLING_REWARD"
+  $: "STATIC_REWARD"
+  x: "BLACK_STAINED_GLASS_PANE"
+settings:
+  shuffling_reward:
+    interval: 5
