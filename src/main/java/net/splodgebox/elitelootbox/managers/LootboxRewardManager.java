@@ -28,12 +28,6 @@ public class LootboxRewardManager {
 
     private final LootboxManager lootboxManager;
 
-    public RandomCollection<LootboxReward> getRewards(Lootbox lootbox) {
-        RandomCollection<LootboxReward> rewards = new RandomCollection<>();
-        lootbox.getRewards().forEach(reward -> rewards.add(reward.getChance(), reward));
-        return rewards;
-    }
-
     public void addReward(String lootboxName, ItemStack reward, double chance, String command, boolean giveItem, boolean isBonus) {
         Lootbox lootbox = validateLootbox(lootboxName);
         if (lootbox == null) {

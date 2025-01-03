@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 public class LootboxListCommand extends DefaultCommand {
 
     @Message(path = "menus.list_lootbox.menu_title", defaultMessage = "&7Viewing lootboxes...")
-    private String menuTitle;
+    private static String menuTitle;
 
     @Dependency
     private LootboxManager lootboxManager;

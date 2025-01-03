@@ -24,9 +24,6 @@ repositories {
     maven {
         url = uri("https://libraries.minecraft.net/")
     }
-    flatDir {
-        dirs '../eliteapi/build/libs'
-    }
     maven {
         url = uri('https://jitpack.io')
     }
@@ -38,7 +35,7 @@ dependencies {
     compileOnly('org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT')
 
     implementation 'org.slf4j:slf4j-api:2.0.7'
-    implementation 'com.github.Splodgebox:eliteapi:1.1.0'
+    implementation 'com.github.Splodgebox:eliteapi:1.1.3'
 }
 
 shadowJar {

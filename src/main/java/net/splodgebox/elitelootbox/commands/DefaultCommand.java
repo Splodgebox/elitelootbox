@@ -17,7 +17,7 @@ public class DefaultCommand extends BaseCommand {
             "&b/elitelootbox addreward <lootbox>\n" +
             "\n" +
             "&3Command Aliases: &7elitelootbox, lootbox, el")
-    private String helpMessage;
+    private static String helpMessage;
 
     @Default
     public void sendHelpMessage(CommandSender sender) {

@@ -18,6 +18,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.splodgebox.eliteapi.item.ItemBuilder;
 import net.splodgebox.eliteapi.message.Message;
+import net.splodgebox.elitelootbox.utils.RandomCollection;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 

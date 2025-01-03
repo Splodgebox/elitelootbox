@@ -17,7 +17,7 @@ public class LootboxGiveCommand extends DefaultCommand {
             path = "commands.give.lootbox_given",
             defaultMessage = "&3&lElite&b&lLootbox&f: &7You have given &b{PLAYER}&7 {AMOUNT}x {LOOTBOX}!"
     )
-    public String lootboxGiven;
+    private static String lootboxGiven;
 
     @Dependency
     private LootboxManager lootboxManager;

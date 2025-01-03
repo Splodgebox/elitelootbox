@@ -17,7 +17,7 @@ import java.util.List;
 public class LootboxRewardsMenu extends PagedMenu {
 
     @Message(path = "menus.list_lootbox_rewards.reward_removed", defaultMessage = "&3&lElite&b&lLootbox&f: &7You have successfully removed a reward from {LOOTBOX}!")
-    public String rewardRemovedMessage;
+    private static String rewardRemovedMessage;
 
     private final Lootbox lootbox;
     private final LootboxRewardManager rewardManager;

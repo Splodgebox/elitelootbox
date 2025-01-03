@@ -1,10 +1,13 @@
-rows: 1
 schema:
-  - "x x £ £ £ $ $ x x"
+  - "# X £ £ £ $ $ X #"
 items:
-  £: "SHUFFLING_REWARD"
-  $: "STATIC_REWARD"
-  x: "BLACK_STAINED_GLASS_PANE"
+  - '£;SHUFFLING_REWARD'
+  - '$;STATIC_REWARD'
+  - '#;COUNTDOWN_SLOT'
+  - 'X;BLACK_STAINED_GLASS_PANE'
 settings:
+  total_duration: 10
   shuffling_reward:
     interval: 5
+  static_reward:
+    type: "BONUS"

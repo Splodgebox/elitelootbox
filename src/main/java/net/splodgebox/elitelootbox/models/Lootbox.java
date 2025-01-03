@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import net.splodgebox.eliteapi.item.ItemBuilder;
 import net.splodgebox.eliteapi.xseries.XMaterial;
 import net.splodgebox.elitelootbox.models.enums.AnimationType;
+import net.splodgebox.elitelootbox.utils.RandomCollection;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -45,6 +46,18 @@ public class Lootbox {
                 .modelData(modelData)
                 .setNbtStr("Lootbox", id)
                 .build();
+    }
+
+    public RandomCollection<LootboxReward> getRewardCollection() {
+        RandomCollection<LootboxReward> collection = new RandomCollection<>();
+        rewards.forEach(reward -> collection.add(reward.getChance(), reward));
+        return collection;
+    }
+
+    public RandomCollection<LootboxReward> getBonusRewardCollection() {
+        RandomCollection<LootboxReward> collection = new RandomCollection<>();
+        bonusRewards.forEach(reward -> collection.add(reward.getChance(), reward));
+        return collection;
     }
 
 }

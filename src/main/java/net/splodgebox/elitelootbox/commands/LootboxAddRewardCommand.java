@@ -7,6 +7,7 @@ import net.splodgebox.eliteapi.message.Message;
 import net.splodgebox.elitelootbox.managers.LootboxManager;
 import net.splodgebox.elitelootbox.managers.LootboxRewardManager;
 import net.splodgebox.elitelootbox.models.Lootbox;
+import net.splodgebox.elitelootbox.models.enums.StaticRewardType;
 import net.splodgebox.elitelootbox.utils.Messages;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -16,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 public class LootboxAddRewardCommand extends DefaultCommand {
 
     @Message(path = "commands.addreward.reward_added", defaultMessage = "&3&lElite&b&lLootbox&f: &aReward successfully added to lootbox &b{LOOTBOX}&a with a chance of &b{CHANCE}&a!")
-    private String rewardAdded;
+    private static String rewardAdded;
 
     @Dependency
     private LootboxManager lootboxManager;
@@ -27,7 +28,7 @@ public class LootboxAddRewardCommand extends DefaultCommand {
     @Subcommand("addreward")
     @CommandPermission("elitelootbox.addreward")
     @CommandCompletion("@lootboxes")
-    public void addReward(CommandSender sender, String lootbox, double chance, @Optional Boolean giveItem, @Optional String command) {
+    public void addReward(CommandSender sender, String lootbox, double chance, @Default("DEFAULT") String rewardType, @Optional Boolean giveItem, @Optional String command) {
         if (!(sender instanceof Player player)) {
             Chat.send(sender, Messages.cannotSendFromConsole);
             return;
@@ -43,7 +44,13 @@ public class LootboxAddRewardCommand extends DefaultCommand {
             return;
         }
 
-        rewardManager.addReward(lootbox, item, chance, command, Boolean.TRUE.equals(giveItem), false);
+        StaticRewardType staticRewardType = StaticRewardType.valueOf(rewardType);
+
+        if (staticRewardType == StaticRewardType.DEFAULT) {
+            rewardManager.addReward(lootbox, item, chance, command, Boolean.TRUE.equals(giveItem), false);
+        } else {
+            rewardManager.addReward(lootbox, item, chance, command, Boolean.TRUE.equals(giveItem), true);
+        }
         Chat.send(sender, rewardAdded, "{LOOTBOX}", lootbox, "{CHANCE}", String.valueOf(chance));
     }
 
